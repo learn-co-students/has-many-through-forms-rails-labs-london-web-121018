@@ -1,1 +1,25 @@
+<h1>Title: </h1>
+<%= @post.title %><br>
+<h2>Content:</h2>
+<%= @post.content %>
 
+<h2>Commenters:</h2>
+<% @post.users.each do |user| %>
+  <%= user.username %>
+<% end %>
+
+<br>
+<br>
+
+<h3>Add a comment</h3>
+<%= form_for [@post, @comment] do |f| %>
+  <div class="field">
+  <%= f.label :content, "Your comment" %>
+  <%= f.text_field :content %>
+  </div>
+  <%= f.collection_select :user_id, User.all, :id, :username %>
+  <br>
+  <%= f.submit %>
+  <% end %>
+  <br>
+<%= link_to "Back to all posts", posts_path %>
