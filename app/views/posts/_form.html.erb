@@ -1,1 +1,26 @@
+<h1>Create a post</h1>
 
+<%= form_for @post do |f| %>
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title, :size=>"50" %>
+  </div>
+  <br>
+  <div class="field">
+    <%= f.label :content %>
+    <%= f.text_area :content, size: "45x5" %>
+  </div>
+  <br>
+  <%= f.label :category %>
+  <%= f.collection_check_boxes :category_ids, Category.all, :id, :name %>
+  <%= f.fields_for :categories, post.categories.build do |categories_fields| %>
+    <%= categories_fields.text_field :name, :size=> "45" %>
+  <% end %>
+  <br>
+  <br>
+  <div class="action">
+  <%= f.submit %>
+  </div>
+<% end %>
+<br>
+<%= link_to "All posts", posts_path %>
