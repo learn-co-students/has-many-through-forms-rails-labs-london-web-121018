@@ -1,1 +1,34 @@
+<h3>Blog Title: <%= @post.title %></h3>
+<p>Content: <%= @post.content %><br></p>
+<p>Categories: <%= @cat_array.join(', ') %></p>
+<p>Users who have commented:</p
+  <ul>
+  <% @usernames.each do |u|%>
+    <li> <%= link_to u, user_path(User.find_by(username: u)) %> </li>
+  <% end %>
+  </ul>
+<p>Comments:</p>
+  <ul>
+    <% @comments.each do |comment| %>
+      <li><%= comment.user.username %> says: <%= comment.content %></li>
+    <% end %>
+  </ul>
 
+<hr>
+
+<h4>Leave a Comment:</h4>
+<%= form_for(@user) do |f| %>
+  <%= f.label :username %>
+  <input list="username" name="username">
+  <datalist id="username">
+    <%= User.all.each do |user| %>
+      <option><%= user.username %></option>
+    <% end %>
+  </datalist><br>
+  <%= f.label "Comment" %>
+  <%= f.fields_for :comments, @user.comments.build do |comments_fields| %>
+    <%= comments_fields.text_area :content, id: "comment_content" %>
+    <%= comments_fields.hidden_field :post_id, value: @post.id %>
+  <% end %>
+  <%= f.submit "Create Comment" %>
+<% end %>
