@@ -1,1 +1,11 @@
+<h3><%= @user.username %></h3>
 
+<p>Email: <%= @user.email %></p>
+
+All Posts Commented On:
+
+<ul>
+  <% @comments.each do |comment| %>
+    <li><%= link_to comment.post.title, post_path(comment.post) %></li>
+  <% end %>
+</ul>
