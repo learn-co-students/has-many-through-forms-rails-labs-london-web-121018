@@ -1,1 +1,16 @@
-
+<%= form_for @post do |f| %>
+  <h3><%= f.label :title %></h3>
+  <%= f.text_field :title %><br>
+  <h3><%= f.label :content %><br></h3>
+  <%= f.text_area :content %><br>
+  <h3><%= f.label "Category" %></h3>
+  <%= f.collection_check_boxes :category_ids, Category.all, :id, :name, {include_hidden: false} %>
+    <br>
+    <%= f.fields_for :categories do |category_fields| %>
+    <%= category_fields.label "add category " %>
+    <%= category_fields.text_field :name, {include_blank: true} %>
+    <% end %>
+  <br>
+  
+  <%= f.submit %>
+<% end %>
